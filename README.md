@@ -28,3 +28,4 @@ to check  the regex validation logic, run the application in a browser and navig
 ##deployment
 
 repo url:https://github.com/lilianeuwase2/liliane_uwase-SummativeAssignent_BuildingResponsiveUI.git
+live url: https://lilianeuwase2.github.io/liliane_uwase-SummativeAssignent_BuildingResponsiveUI/
