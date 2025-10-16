@@ -4,28 +4,32 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
-    <title>student life planner</title>
+    <title>Campus Life Planner</title>
 </head>
 
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
- <header>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header>
     <h1>Campus Life Planner</h1>
-     <nav>
-         <a href="#dashboard" class="nav-link">Dashboard</a>
-         <a href="#record" class="nav-link">My Tasks</a>
-         <a href="#add-task" class="nav-link">Create New task</a>
-         <a href="#settings" class="nav-link">Settings</a>
-         <a href="#about" class="nav-link">About</a>
-     </nav>
- </header>
+    <div class="welcome-banner">
+        <p>Welcome to campus life planner! <br> your centralized tool for better task management.</p>
+    </div>
+    <nav role="navigation">
+        <a href="#dashboard" class="nav-link active">Dashboard</a>
+        <a href="#record" class="nav-link">My Tasks</a>
+        <a href="#add-task" class="nav-link">Create New Task</a>
+        <a href="#settings" class="nav-link">Settings</a>
+        <a href="#about" class="nav-link">About</a>
+    </nav>
+</header>
 
 <main id="main-content">
-    <section id="dashboard-section" class="content-section">
+    <section id="dashboard" class="content-section">
         <h2>Dashboard </h2>
         <div class="stats-container">
             <div class="stats-card">
-                <div class="stats-label">Total tasks</div>
+                <div class="stats-label">Total Tasks</div>
                 <div class="stats-value" id="total-tasks-value">0</div>
             </div>
             <div class="stats-card">
@@ -41,36 +45,75 @@
                 <div class="stats-value" id="total-duration-value">0 mins</div>
             </div>
             <div class="stats-card">
-                <div class="stats-label">Category</div>
-                <div class="stats-value" id="category-value">None</div>
+                <div class="stats-label">Daily Target</div>
+                <div class="stats-value" id="daily-target-display">600 mins</div>
             </div>
+            <div class="stats-card">
+                <div class="stats-label">Top Category</div>
+                <div class="stats-value" id="top-category-value">None</div>
+            </div>
+        </div>
+
+        <div id="target-status" role="status" aria-live="polite" class="target-message">
+            Set your daily target in Settings!
         </div>
     </section>
 
     <section id="record" class="content-section hidden">
         <h2>My Tasks</h2>
-      <div id="tasks-list">
-          <div class="no-tasks-message" id="no-tasks-message">
-              <p>No tasks found. Create your first task</p>
-          </div>
+
+        <div id="deletion-confirmation-message" class="confirmation-message confirmation-message-deletion hidden" role="status" aria-live="polite">
+            Task deleted successfully!
+        </div>
+
+        <div class="task-controls">
+            <div class="search-group">
+                <input type="text" id="search-input" placeholder="Search tasks (regex allowed)..." aria-label="Search tasks using regex pattern">
+                <button id="search-btn" class="primary-button">Search</button>
+                <label>
+                    <input type="checkbox" id="case-sensitive"> Case Sensitive
+                </label>
+            </div>
+
+            <div class="sort-buttons data-buttons">
+                <button id="sort-name" class="secondary-button">Sort by Name</button>
+                <button id="sort-date" class="secondary-button">Sort by Due Date</button>
+                <button id="sort-duration" class="secondary-button">Sort by Duration</button>
+            </div>
+
+            <div id="search-results" class="search-output">
+            </div>
+        </div>
+
+        <div id="tasks-list">
+            <div class="no-tasks-message" id="no-tasks-message">
+                <p>No tasks found. Create your first task</p>
+            </div>
         </div>
     </section>
 
-    <!-- add new task section -->
     <section id="add-task" class="content-section hidden">
         <h2>Add new task</h2>
+
+        <div id="task-confirmation-message" class="confirmation-message confirmation-message-creation hidden" role="status" aria-live="polite">
+            Task added successfully! 🎉
+        </div>
+
         <form id="add-task-form">
             <div class="form-group">
                 <label for="task-name">Task name</label>
-                <input type="text" name="name" id="task-name" placeholder="Enter task name" required>
+                <input type="text" name="name" id="task-name" placeholder="Enter task name" required aria-required="true">
+                <div id="name-error" class="error-message" role="alert"></div>
             </div>
             <div class="form-group">
-                <label for="task-dueDate">Due Date</label>
-                <input type="date" name="dueDate" id="task-dueDate" required>
+                <label for="task-dueDate">Due Date (YYYY-MM-DD)</label>
+                <input type="date" name="dueDate" id="task-dueDate" required aria-required="true">
+                <div id="date-error" class="error-message" role="alert"></div>
             </div>
             <div class="form-group">
                 <label for="task-duration">Duration (minutes)</label>
-                <input type="number" name="duration" id="task-duration" required value="60" min="1">
+                <input type="number" name="duration" id="task-duration" required value="60" min="1" aria-required="true">
+                <div id="duration-error" class="error-message" role="alert"></div>
             </div>
             <div class="form-group">
                 <label for="task-tag">Tag</label>
@@ -81,16 +124,15 @@
                     <option value="Other">Other</option>
                 </select>
             </div>
-            <button type="submit">Add Task</button>
+            <button type="submit" class="primary-button">Add Task</button>
         </form>
-
-    <!-- settings -->
     </section>
+
     <section id="settings" class="content-section hidden">
         <h2>Settings</h2>
         <div class="settings-container">
             <div class="settings-card">
-                <label for="daily-target">Daily Time Target(minutes)</label>
+                <label for="daily-target">Daily Time Target (minutes)</label>
                 <input type="number" name="dailyTarget" id="daily-target" value="600" min="0">
             </div>
 
@@ -102,25 +144,23 @@
                 </select>
             </div>
             <div class="settings-card data-buttons">
-                <button id="export-btn">Export data</button>
-                <button id="import-btn">Import data</button>
-                <input type="file" id="import-file" accept=".json" style="display: none;">
+                <button id="export-btn" class="secondary-button">Export Data (JSON)</button>
+                <button id="import-btn" class="primary-button">Import Data (JSON)</button>
+                <input type="file" id="import-file" accept=".json" style="display: none;" aria-hidden="true">
             </div>
         </div>
     </section>
 
-    <!-- about section -->
     <section id="about" class="content-section hidden">
-        <h2>About this planner</h2>
-        <p>this is a simple life planner designed to help you manage your tasks</p>
+        <h2>About this Planner</h2>
+        <p>This is a simple Campus Life Planner designed students manage their academic tasks, track time allocation, and set daily targets for productivity.</p>
     </section>
 </main>
 
-
 <footer>
-    <p>Created by <span id="student-name">Liliane Uwase </span>
-    <a href="https://github.com/lilianeuwase2" target="blank">GitHub Profile</a>
-    </p>
+    <p>Created by <span id="student-name">Liliane Uwase</span>
+        <a href="https://github.com/lilianeuwase2" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
 </footer>
+<script src="script.js"></script>
 </body>
 </html>
