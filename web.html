@@ -1,1 +1,126 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>student life planner</title>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+ <header>
+    <h1>Campus Life Planner</h1>
+     <nav>
+         <a href="#dashboard" class="nav-link">Dashboard</a>
+         <a href="#record" class="nav-link">My Tasks</a>
+         <a href="#add-task" class="nav-link">Create New task</a>
+         <a href="#settings" class="nav-link">Settings</a>
+         <a href="#about" class="nav-link">About</a>
+     </nav>
+ </header>
+
+<main id="main-content">
+    <section id="dashboard-section" class="content-section">
+        <h2>Dashboard </h2>
+        <div class="stats-container">
+            <div class="stats-card">
+                <div class="stats-label">Total tasks</div>
+                <div class="stats-value" id="total-tasks-value">0</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-label">Completed</div>
+                <div class="stats-value" id="completed-tasks-value">0</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-label">Pending</div>
+                <div class="stats-value" id="pending-tasks-value">0</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-label">Total Duration</div>
+                <div class="stats-value" id="total-duration-value">0 mins</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-label">Category</div>
+                <div class="stats-value" id="category-value">None</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="record" class="content-section hidden">
+        <h2>My Tasks</h2>
+      <div id="tasks-list">
+          <div class="no-tasks-message" id="no-tasks-message">
+              <p>No tasks found. Create your first task</p>
+          </div>
+        </div>
+    </section>
+
+    <!-- add new task section -->
+    <section id="add-task" class="content-section hidden">
+        <h2>Add new task</h2>
+        <form id="add-task-form">
+            <div class="form-group">
+                <label for="task-name">Task name</label>
+                <input type="text" name="name" id="task-name" placeholder="Enter task name" required>
+            </div>
+            <div class="form-group">
+                <label for="task-dueDate">Due Date</label>
+                <input type="date" name="dueDate" id="task-dueDate" required>
+            </div>
+            <div class="form-group">
+                <label for="task-duration">Duration (minutes)</label>
+                <input type="number" name="duration" id="task-duration" required value="60" min="1">
+            </div>
+            <div class="form-group">
+                <label for="task-tag">Tag</label>
+                <select id="task-tag" name="tag">
+                    <option value="Study">Study</option>
+                    <option value="Project">Project</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <button type="submit">Add Task</button>
+        </form>
+
+    <!-- settings -->
+    </section>
+    <section id="settings" class="content-section hidden">
+        <h2>Settings</h2>
+        <div class="settings-container">
+            <div class="settings-card">
+                <label for="daily-target">Daily Time Target(minutes)</label>
+                <input type="number" name="dailyTarget" id="daily-target" value="600" min="0">
+            </div>
+
+            <div class="settings-card">
+                <label for="time-unit">Display Time in</label>
+                <select id="time-unit" name="timeUnit">
+                    <option value="minutes">Minutes</option>
+                    <option value="hours">Hours</option>
+                </select>
+            </div>
+            <div class="settings-card data-buttons">
+                <button id="export-btn">Export data</button>
+                <button id="import-btn">Import data</button>
+                <input type="file" id="import-file" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </section>
+
+    <!-- about section -->
+    <section id="about" class="content-section hidden">
+        <h2>About this planner</h2>
+        <p>this is a simple life planner designed to help you manage your tasks</p>
+    </section>
+</main>
+
+
+<footer>
+    <p>Created by <span id="student-name">Liliane Uwase </span>
+    <a href="https://github.com/lilianeuwase2" target="blank">GitHub Profile</a>
+    </p>
+</footer>
+</body>
+</html>
